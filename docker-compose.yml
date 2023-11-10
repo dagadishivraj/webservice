@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  webservice:
+    image: webservice9:1.0.0
+    ports:
+      - "9009:9009"
+
+  authservice:
+    image: authservice2:1.0.0
+    ports:
+      - "9006:9006"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/userid
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - db
+
+  registerservice:
+    image: registerservice:1.0.0
+    ports:
+      - "9008:9008"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/userid
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - db
+  db:
+    image: dbc:1.0.0
+    environment:
+      DATABASE_HOST: docker-mysql
+      DATABASE_PORT: 3306
+      MYSQL_DATABASE: userid
+      MYSQl_PASSWORD: password
+
+
+
+
+
+
+
+
+
+
